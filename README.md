@@ -46,7 +46,7 @@ Create a file called `authorized_keys`.
 
 Return to the public key that has been generated on your local machine, and view the key using:
 
-    $ cat ~/.ssh/item-catalog.pub
+    $ cat ~/.ssh/item_catalog.pub
 
 Copy this entire key into the `authorized_key` file within the VM using:
 
@@ -57,6 +57,14 @@ Restart the VM.
 From a terminal window, ssh into the VM using this command:
 
     $ ssh ubuntu@3.8.116.47 -i ~/.ssh/item_catalog
+
+#### SSH Configuration
+
+Edit the sshd_config file to allow ssh requests from port 2200.
+
+    $ sudo nano /etc/ssh/sshd_config
+
+Edit the line that says `Port 20` to `Port 2200`. Then exit and save this file.
 
 #### Firewall
 
@@ -80,6 +88,10 @@ Allow HTTP (port 80)
 Allow NTP (port 123)
 
     $ sudo ufw allow 123/tcp
+
+Start the firewall
+
+    $ sudo ufw enable
 
 #### Users
 
