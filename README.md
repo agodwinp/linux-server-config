@@ -14,9 +14,47 @@ Include architecture and code design diagrams.
 
 ### Starting Ubuntu Linux VM
 
+Include set up steps from the Udacity project page.
+
 ### Software Installed
 
-### Configurations 
+#### Update Package Source List
+
+    $ sudo apt-get update
+
+#### Update Currently Installed Packages
+
+    $ sudo apt-get upgrade
+
+#### Remove Unused Packages
+
+    $ sudo apt-get autoremove
+
+### Configurations
+
+#### Firewall
+
+First, block all incoming requests.
+
+    $ sudo ufw default deny incoming
+
+Allow all outgoing requests.
+
+    $ sudo ufw default allow outgoing
+
+Allow ssh.
+
+    $ sudo ufw allow ssh
+    $ sudo ufw allow 2200/tcp
+
+Allow HTTP (port 80)
+
+    $ sudo ufw allow www
+
+Allow NTP (port 123)
+
+    $ sudo ufw allow 123/tcp
+
 
 Firewall, users, database etc...
 
