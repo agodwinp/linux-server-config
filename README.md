@@ -147,6 +147,37 @@ Reload the ssh daemon
 
     $ sudo systemctl reload sshd
 
+#### Change Timezone
+
+Configure the local timezone to UTC.
+
+    $ sudo dpkg-reconfigure tzdata
+
+Scroll down to `None of the above` and hit enter. Then scroll down again and hit enter when you find `UTC`.
+
+#### Install Apache2 Webserver
+
+    $ sudo apt-get install apache2
+    $ sudo apt-get install libapache2-mod-wsgi
+
+Check to see if the Apache web server is running by visiting `35.178.22.227:80`. You should be presented with an Apache documentation site. Now we will change this so that it routes to our application.
+
+Configure Apache to handle requests using the WSGI module.
+
+    $ sudo nano /etc/apache2/sites-enabled/000-default.conf
+
+Add the following line above `</Virtualhost>`
+    
+    $ WSGIScriptAlias / /var/www/html/myapp.wsgi
+
+Restart apache with
+
+    $ sudo apache2ctl restart
+
+Create the `myapp.wsgi` file
+
+    $ sudo nano /var/www/html/myapp.wsgi
+
 ***
 
 ## Usage
