@@ -32,32 +32,6 @@ Include set up steps from the Udacity project page.
 
 ### Configurations
 
-#### Public/Private Key
-
-Use ssh-keygen to generate a private/public key pair on your local machine.
-
-Use the browser to SSH into the Linux VM. In the root directory, create a directory called `.ssh`.
-
-    $ sudo mkdir .ssh
-
-Create a file called `authorized_keys`.
-
-    $ sudo touch authorized_keys
-
-Return to the public key that has been generated on your local machine, and view the key using:
-
-    $ cat ~/.ssh/item_catalog.pub
-
-Copy this entire key into the `authorized_key` file within the VM using:
-
-    $ sudo nano ~/.ssh/authorized_keys
-
-Restart the VM. 
-
-From a terminal window, ssh into the VM using this command:
-
-    $ ssh ubuntu@3.8.116.47 -i ~/.ssh/item_catalog
-
 #### SSH Configuration
 
 Edit the sshd_config file to allow ssh requests from port 2200.
@@ -97,7 +71,49 @@ Start the firewall
 
 Create a new user called `grader`
 
-Firewall, users, database etc...
+    $ sudo adduser grader
+
+Enter a password, but we will disable this later.
+
+Make `grader` a sudoer. Copy existing sudoers.d file as grader.
+
+    $ sudo cp /etc/sudoers.d/90-cloud-init-users /etc/sudoers.d/grader
+
+Give read and write permissions to root for this user.
+
+    $ sudo chmod 600 /etc/sudoers.d/grader
+
+Edit the `grader` file in sudoers.d
+
+    $ sudo nano /etc/sudoers.d/grader
+
+Change `ubuntu ALL=(ALL) NOPASSWD:ALL` to `grader ALL=(ALL) NOPASSWD:ALL`
+
+#### Public/Private Key
+
+Use ssh-keygen to generate a private/public key pair on your local machine.
+
+Use the browser to SSH into the Linux VM. In the root directory, create a directory called `.ssh`.
+
+    $ sudo mkdir .ssh
+
+Create a file called `authorized_keys`.
+
+    $ sudo touch authorized_keys
+
+Return to the public key that has been generated on your local machine, and view the key using:
+
+    $ cat ~/.ssh/item_catalog.pub
+
+Copy this entire key into the `authorized_key` file within the VM using:
+
+    $ sudo nano ~/.ssh/authorized_keys
+
+Restart the VM. 
+
+From a terminal window, ssh into the VM using this command:
+
+    $ ssh ubuntu@18.130.226.144 -i ~/.ssh/item_catalog -p 2200
 
 ***
 
