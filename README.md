@@ -1,6 +1,6 @@
 # 3. Linux Server Configuration
 
-This repository will guide you through how to set up a Ubuntu Linux VM using Amazon Lightsail, and access my deployed item-catalog application from the server.
+This repository will guide you through how to set up a Ubuntu Linux VM using Amazon Lightsail, and access a deployed item-catalog application from the server.
 
 ***
 
@@ -70,13 +70,17 @@ Start the firewall
 
     $ sudo ufw enable
 
+Log out of the VM go into the `Networking` tab of the Amazon Lightsail instance that you have just created. Add the port 2200 to the accepted lists of ports for the firewall.
+
+Now reboot the VM. 
+
 #### Users
 
 Create a new user called `grader`
 
     $ sudo adduser grader
 
-Enter a password, but we will disable this later. You can hit enter when prompted to fill in more information, or feel free to fill in the details (Full name, Room number, Work phone, Home phone, Other)
+Enter a password, but we will disable this later. You can hit enter when prompted to fill in more information, or feel free to fill in the details (Full name, Room number, Work phone, Home phone, Other).
 
 Make `grader` a sudoer. Copy existing sudoers.d file as grader.
 
@@ -94,19 +98,13 @@ Change `ubuntu ALL=(ALL) NOPASSWD:ALL` to `grader ALL=(ALL) NOPASSWD:ALL`
 
 #### Public/Private Key
 
-Use ssh-keygen to generate a private/public key pair on your local machine.
-
 Log in again as ubuntu
 
-switch user using `su - grader`
+    $ ssh ubuntu@35.178.22.227 -p 2200
 
-Now log into the VM using the newly created user `grader`. You will be prompted to enter the password that you originally set, but we will remove the ability to log in with a password shortly.
+Switch user to `grader`.
 
-First go into the `Networking` tab of the Amazon Lightsail instance that you have just created. Add the port 2200 to the accepted lists of ports for the firewall.
-
-Reboot the instance.
-
-    $ ssh grader@35.178.22.227 -p 2200
+    $ su - grader
 
 In the root directory, create a directory called `.ssh`.
 
@@ -133,11 +131,21 @@ Log out of the grader user
 
     $ exit
 
-And reboot the VM.
-
-From a terminal window, ssh into the VM using this command:
+And log out of the VM. Now reboot the VM and from a terminal window, ssh into the VM with your new user and private key using this command:
 
     $ ssh grader@35.178.22.227 -i ~/.ssh/item_catalog -p 2200
+
+#### Disable Password Authentication
+
+Open the SSH daemon configuration file.
+
+    $ sudo nano /etc/ssh/sshd_config
+
+Scroll down to the line starting with `PasswordAuthentication`. Ensure that after this word, it says `no`. Then save and close the file.
+
+Reload the ssh daemon
+
+    $ sudo systemctl reload sshd
 
 ***
 
