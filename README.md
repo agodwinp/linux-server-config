@@ -178,6 +178,10 @@ Create the `myapp.wsgi` file
 
     $ sudo nano /var/www/html/myapp.wsgi
 
+#### Install and configure PostgreSQL
+
+
+
 ***
 
 ## Usage
