@@ -263,6 +263,45 @@ Install all the projects dependencies
 Install psycopg2
 
     $ sudo pip install psycopg2-binary
+    $ deactivate
+
+#### Configure and enable a new virtual host
+
+Create a virtual host config file
+
+    $ sudo nano /etc/apache2/sites-available/catalog.conf
+
+Include the following lines of code in this file
+
+    <VirtualHost *:80>
+        ServerName 35.178.22.227
+        ServerAlias ec2-35-178-22-227.eu-west-2.compute.amazonaws.com
+        ServerAdmin admin@35.178.22.227
+        WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
+        WSGIProcessGroup catalog
+        WSGIScriptAlias / /var/www/catalog/catalog/catalog.wsgi
+        <Directory /var/www/catalog/catalog/>
+            Order allow,deny
+            Allow from all
+        </Directory>
+        Alias /static /var/www/catalog/catalog/static
+        <Directory /var/www/catalog/catalog/static/>
+            Order allow,deny
+            Allow from all
+        </Directory>
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+
+Enable the new virtual host
+
+    $ sudo a2ensite catalog
+
+To activate the new configuration reload the apache server
+
+    $ sudo service apache2 reload
+
 
 
 
