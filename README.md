@@ -54,17 +54,23 @@ Finally, let's remove any unneeded packages.
 
     $ sudo apt-get autoremove
 
-#### SSH Configuration
+#### SSH configuration
 
-Edit the sshd_config file to allow ssh requests from port 2200.
+The default SSH port is `22`. We want to change this port to `2200`. To do this, edit the `sshd_config` file to allow SSH requests from port `2200` with the following command.
 
     $ sudo nano /etc/ssh/sshd_config
 
-Edit line 5 that says `Port 20` to `Port 2200`. Then exit and save this file.
+Once you see the contents of this file with the `nano` application, change line 5 that says `Port 20` to `Port 2200`. Then save and exit this file by typing `CTRL+X`, `Y`, `Enter`, one after another.
 
-#### Firewall
+> Return to the your Lightsail instance screen within your browser. Navigate to the `Networking` tab and you should see under `Firewall`, that the instance accepts connections on port `22` and `80` for SSH and HTTP respectively. Add another connection here with the following settings and save the changes.
 
-First, block all incoming requests.
+    Application: Custom
+    Protocol: TCP
+    Port range: 2200
+
+#### Firewall configuration
+
+Using the **Uncomplicated Firewall** (UFW) application, we will configure the firewall for this server to only allow incoming connections for **SSH** (port 2200), **HTTP** (port 80) and **NTP** (port 123). First, block all incoming requests.
 
     $ sudo ufw default deny incoming
 
@@ -72,25 +78,31 @@ Allow all outgoing requests.
 
     $ sudo ufw default allow outgoing
 
-Allow ssh.
+Allow SSH on port 2200.
 
     $ sudo ufw allow 2200/tcp
 
-Allow HTTP (port 80)
+Allow HTTP on port 80.
 
     $ sudo ufw allow www
 
-Allow NTP (port 123)
+Allow NTP port 123.
 
     $ sudo ufw allow 123/tcp
 
-Start the firewall
+Finally, start the firewall.
+
+> **Warning**: When changing the SSH port, make sure that the firewall is open for port 2200 first, otherwise you will be locked out of the server. When you change the SSH port, the instance will no longer be accessible through the web app `Connect using SSH` button. Instructions on how to connection through a temrinal window are provided below.
 
     $ sudo ufw enable
 
-Log out of the VM go into the `Networking` tab of the Amazon Lightsail instance that you have just created. Add the port 2200 to the accepted lists of ports for the firewall.
+Once again return to the your Lightsail instance, navigate to the `Networking` tab and as before you should see that the instance accepts connections on port `22`, `80` and `2200`. We need to remove the connection for `22` and add a connection for **NTP** on port `123`. Click on `Edit rules`, delete the connection on port `22` and add a connection with the following settings.
 
-Now reboot the VM. 
+    Application: Custom
+    Protocol: TCP
+    Port range: 123
+
+Finally, reboot the instance by clicking on `Reboot`.
 
 #### Users
 
