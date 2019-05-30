@@ -60,7 +60,9 @@ The default SSH port is `22`. We want to change this port to `2200`. To do this,
 
     $ sudo nano /etc/ssh/sshd_config
 
-Once you see the contents of this file with the `nano` application, change line 5 that says `Port 20` to `Port 2200`. Then save and exit this file by typing `CTRL+X`, `Y`, `Enter`, one after another.
+Once you see the contents of this file with the `nano` application, change line 5 that says `Port 20` to `Port 2200`. Whilst we are in this file, let's also disable login as the `root` user, to ensure security of the instance.
+
+Scroll down to the line starting with `PermitRootLogin`, and make sure that it says `no` after this word. Then save and exit this file by typing `CTRL+X`, `Y`, `Enter`, one after another.
 
 #### Firewall configuration
 
