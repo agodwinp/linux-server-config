@@ -16,12 +16,12 @@ Include architecture and code design diagrams.
 
 For this project I used a baseline installation of an Ubuntu Linux Virtual Machine provided by [Amazon Lightsail](https://lightsail.aws.amazon.com/ls/webapp/home/instances).
 
-1. a) First, log in to Lighsail.
-1. b) Once you're logged in, you'll be prompted to create an instance. Choose a plain Ubuntu Linux image and select the option for "OS Only".
+**1. a)** First, log in to Lighsail.
+**1. b)** Once you're logged in, you'll be prompted to create an instance. Choose a plain Ubuntu Linux image and select the option for "OS Only".
 
 > **Note**: I used a Ubuntu Linux 16.04 LTS instance for my setup.
 
-1. c) Under the header `SSH key pair manager`, you can select, create or upload the key pair that you'd like to use to SSH into the instance.
+**1. c)** Under the header `SSH key pair manager`, you can select, create or upload the key pair that you'd like to use to SSH into the instance.
 
 > For this, we will step away from the Lightsail window, and open a fresh terminal window on your local computer. We will use the `ssh-keygen` application to generate our public/private key pair.
 
@@ -30,25 +30,27 @@ For this project I used a baseline installation of an Ubuntu Linux Virtual Machi
     $ /Users/arun/.ssh/item_catalog
     # It then prompts you to enter a password, for this project you can leave this as blank, but feel free to enter one if you wish.
 
-1. d) Now we have created our key pair, we want to upload this into the `SSH key pair manager` within Lightsail. Switch back to your Lightsail setup browser window and click on `Change SSH key pair` button under the "OPTIONAL" header.
-1. e) Choose "Upload New", and browse your file system to find the key pair you just created. Select the key which ends in `.pub`, this is the public key that we need to place on the server to enable key based authentication.
-1. f) Next, you'll be asked to choose an instance plan. This determines how powerful of a server you get and how much you'll be charged for its usage. For this project I chose the lowest tier, which is free for 30 days.
-1. g) Every instance requires a unique hostname. For this project, I named my instance `item-catalog`, but you can name yours anything you wish.
-1. h) Click on Create and wait for the instance for start up. This may take a few minutes.
-1. i) Once it has started, you can log into it using SSH by clicking on the button `Connect via SSH`.
-1. j) Provided this has all worked, you will now be logged into your machine via SSH as the `ubuntu` user, within a window in your browser.
+**1. d)** Now we have created our key pair, we want to upload this into the `SSH key pair manager` within Lightsail. Switch back to your Lightsail setup browser window and click on `Change SSH key pair` button under the "OPTIONAL" header.
+**1. e)** Choose "Upload New", and browse your file system to find the key pair you just created. Select the key which ends in `.pub`, this is the public key that we need to place on the server to enable key based authentication.
+**1. f)** Next, you'll be asked to choose an instance plan. This determines how powerful of a server you get and how much you'll be charged for its usage. For this project I chose the lowest tier, which is free for 30 days.
+**1. g)** Every instance requires a unique hostname. For this project, I named my instance `item-catalog`, but you can name yours anything you wish.
+**1. h)** Click on Create and wait for the instance for start up. This may take a few minutes.
+**1. i)** Once it has started, you can log into it using SSH by clicking on the button `Connect via SSH`.
+**1. j)** Provided this has all worked, you will now be logged into your machine via SSH as the `ubuntu` user, within a window in your browser.
 
-### Software Installed
+### 2. Secure Server
 
-#### Update Package Source List
+##### Update package source list and currently installed packages
+
+An easy step to ensure your server is secure is to keep your software up to date with nerw releases. The first step to update your installed software is to update your package source list. This makes sure your system is aware of the latest information stored within the repositories you're making use of.
 
     $ sudo apt-get update
 
-#### Update Currently Installed Packages
+Now that our system is aware of all the software available and their most recent version, let's upgrade this software.
 
     $ sudo apt-get upgrade
 
-#### Remove Unused Packages
+Finally, let's remove any unneeded packages.
 
     $ sudo apt-get autoremove
 
