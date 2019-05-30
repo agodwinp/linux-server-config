@@ -6,7 +6,15 @@ This repository will guide you through how to take a baseline installation of an
 
 ## Design
 
-Include architecture and code design diagrams.
+The architecture for this web application consists of a Python Flask application being served via mod_wsgi on an Apache web server. This Apache web server is being hosted on an AWS Lightsail Ubuntu Linux 16.04 LTS machine, and is accessing data from a PostgreSQL database on the same instance. The front end has been built using HTML, CSS, JavaScript, jQuery and AJAX.
+
+<br>
+<br>
+<p align="center">
+    <img src="architecture.png" width="600", title="Architecture">
+</p>
+<br>
+<br>
 
 ***
 
