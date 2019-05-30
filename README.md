@@ -207,7 +207,7 @@ Next we can configure our username and email for the Git account that we will be
 
 ### 4. Clone Application from GitHub
 
-Since I cloned my own item catalog project into the instance, I will be referring to this [repository](https://github.com/agodwinp/item-catalog). By default, Apache2 starts up a web server and serves the files located in `/var/www/html/`. In the following steps we will clone my web application and configure Apache to hand-off certain requests to an application handler called `mod_wsgi`. First, we need to navigate to `/var/www`.
+Since I cloned my own item catalog project into the instance, I will be referring to this [repository](https://github.com/agodwinp/item-catalog). By default, Apache starts up a web server and serves the files located in `/var/www/html/`. In the following steps we will clone my web application and configure Apache to hand-off certain requests to an application handler called `mod_wsgi`. First, we need to navigate to `/var/www`.
 
     $ cd /var/www
 
@@ -396,7 +396,7 @@ All that is left to do, is restart Apache and our application will be automatica
 
     $ sudo service apache2 restart
 
-> If at any point the web server does not serve the item catalog application any longer, you can view the apache2 error log by running the following command on thr server
+> If at any point the web server does not serve the item catalog application any longer, you can view the Apache error log by running the following command on thr server
 
     $ sudo cat /var/log/apache2/error.log
 
