@@ -313,57 +313,57 @@ Finally, to activate the new configuration reload the Apache server.
 
     $ sudo service apache2 reload
 
-### 7. Install and configure PostgreSQL
+### 7. Install and Configure PostgreSQL
 
 For this application, we are running both the Apache web server and the database server on the same machine. The database of choice is [PostgreSQL](https://www.postgresql.org).
 
-Install some necessary Python packages for working with PostgreSQL
+First we need to install some necessary Python packages for working with PostgreSQL.
 
     $ sudo apt-get install libpq-dev python-dev
 
-Install PostgreSQL
+Then, we need to install PostgreSQL.
 
     $ sudo apt-get install postgresql postgresql-contrib
 
-Postgres is automatically creating a new user during its installation, whose name is 'postgres'. That is a trusted user who can access the database software. So let's change the user then connect to the database system
+Postgres automatically creates a new user during its installation, whose name is `postgres`. This user is a trusted user that can access the software installed. Now let's change to this automatically created user `postgres` and connect to the database system.
 
     $ sudo su - postgres
     $ psql
 
-Create a new user called 'catalog' with a password
+Now let's create a new user called `catalog` with password = `password`.
 
     # CREATE USER catalog WITH PASSWORD 'password';
 
-Give catalog user the CREATEDB capability
+Give the `catalog` user the `CREATEDB` capability.
 
     # ALTER USER catalog CREATEDB;
 
-Create the 'catalog' database owned by catalog user
+Create a `catalog` database owned by `catalog` user.
 
     # CREATE DATABASE catalog WITH OWNER catalog;
 
-Connect to the database:
+Now, connect to the `catalog` database.
 
     # \c catalog
 
-Revoke all rights
+Revoke all rights from the `catalog` database.
         
     # REVOKE ALL ON SCHEMA public FROM public;
 
-Lock down the permissions to only let catalog role create tables
+And now lock down the permissions to only let the `catalog` user create tables.
 
     # GRANT ALL ON SCHEMA public TO catalog;
 
-Log out from PostgreSQL and then return to the grader user on the server
+Finally, log out from PostgreSQL and return to the `grader` user on the server.
 
     # \q
     $ exit
 
-Setup the database with
+Within the files cloned from GitHub, we have a file called `populatedb.py` which will populate our database when run. To do this, set up the database with the following command.
 
     $ python /var/www/catalog/catalog/populatedb.py
 
-To prevent potential attacks from the outer world we double check that no remote connections to the database are allowed. Open the file `ph_hba_conf` and edit it to look like below
+To prevent potential attacks we need to ensure that no remote connections are allowed to the database. To do this, open the file `ph_hba.conf` and edit it to include the lines shown below.
 
     $ sudo nano /etc/postgresql/9.3/main/pg_hba.conf
 
