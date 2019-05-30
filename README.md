@@ -359,11 +359,27 @@ To prevent potential attacks from the outer world we double check that no remote
     host    all             all             127.0.0.1/32            md5
     host    all             all             ::1/128                 md5
 
+#### Update OAuth Authorised Javascript Origins and Domains
+
+To let users correctly log in with Google Sign-In you must add http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com to the list of authorized URI's for this Client ID.
+
+#### Restart Apache
+
+Restart Apache to launch the app
+
+    $ sudo service apache2 restart
+
+If at any point the web server does not serve the item catalog application any longer, you can view the apache2 error log by running the following command on thr server
+
+    $ sudo cat /var/log/apache2/error.log
+
 ***
 
 ## Usage
 
-How to connect to application.
+- IP Address: 35.178.22.227
+- Accessible SSH Port: 2200
+- Application URL: http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com
 
 ***
 
