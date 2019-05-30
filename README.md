@@ -195,7 +195,7 @@ Next we can configure our username and email for the Git account that we will be
     $ git config --global user.name <username>
     $ git config --global user.email <email>
 
-### 4. Clone Application from Github
+### 4. Clone Application from GitHub
 
 Since I cloned my own item catalog project into the instance, I will be referring to this [repository](https://github.com/agodwinp/item-catalog). By default, Apache2 starts up a web server and serves the files located in `/var/www/html/`. In the following steps we will clone my web application and configure Apache to hand-off certain requests to an application handler called `mod_wsgi`. First, we need to navigate to `/var/www`.
 
@@ -239,46 +239,48 @@ Save and exit from this file with `CTRL+X`, `Y` and `Enter`.
 
 > **Note**: the .git folder will be inaccessible from the web without any particular setting. The only directory that can be listed in the browser will be the `static` folder.
 
-### 5. Install virtual environment, Flask and project dependencies
+### 5. Install Virtual Environment & project dependencies
 
-Install pip, the tool for installing Python packages and update
+In order to isolate the applications dependencies away from the main server, we will be creating a Python Virtual Environment to house the application, files and dependencies. First of all install pip, the tool for installing Python packages and update it.
 
     $ sudo apt-get install python-pip
     $ sudo pip install --upgrade pip
 
-If virtualenv is not installed, use pip to install it using the following command
+If `virtualenv` is not installed, use pip to install it using the following command.
 
     $ sudo pip install virtualenv
 
-Move to the parent catalog folder and then create a new virtual environment
+Move to the parent `catalog` folder and then create a new virtual environment.
 
     $ cd /var/www/catalog
     $ sudo virtualenv venv
 
-Activate the virtual environment
+Activate the virtual environment so that we are now working within it.
 
     $ source venv/bin/activate
 
-Change permissions to the virtual environment folder
+Change permissions to the virtual environment folder so that all users can read, write and execute files from it.
 
     $ sudo chmod -R 777 venv
 
-Install all the projects dependencies
+Install all the projects dependencies using the `requirements.txt` file.
 
     $ sudo pip install -r catalog/requirements.txt
 
-Install psycopg2
+Install `psycopg2`.
 
     $ sudo pip install psycopg2-binary
     $ deactivate
 
-### 6. Configure and enable a new virtual host
+The final `deactivate` command will bring you out of the virtual environment.
 
-Create a virtual host config file
+### 6. Configure new Virtual Host
+
+Before, Apache was serving the files residing in the `var/www/html` directory. Now we will configure Apache to serve the cloned application. First we must create a virtual host configuration file.
 
     $ sudo nano /etc/apache2/sites-available/catalog.conf
 
-Include the following lines of code in this file
+Include the following lines of code in this file.
 
     <VirtualHost *:80>
         ServerName 35.178.22.227
@@ -301,15 +303,19 @@ Include the following lines of code in this file
         CustomLog ${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
 
-Enable the new virtual host
+> The **WSGIDaemonProcess** line specifies to use the virtual environment and its packages to run the application.
+
+Now, enable the new virtual host.
 
     $ sudo a2ensite catalog
 
-To activate the new configuration reload the apache server
+Finally, to activate the new configuration reload the Apache server.
 
     $ sudo service apache2 reload
 
 ### 7. Install and configure PostgreSQL
+
+For this application, we are running both the Apache web server and the database server on the same machine. The database of choice is [PostgreSQL](https://www.postgresql.org).
 
 Install some necessary Python packages for working with PostgreSQL
 
