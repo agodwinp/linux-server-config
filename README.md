@@ -90,7 +90,7 @@ Finally, start the firewall.
 
     $ sudo ufw enable
 
-### 3. Create 'grader' user and grant access
+### 3. Create 'grader' User
 
 Whilst still logged in via SSH within your browser, we need to create a new user called `grader`.
 
@@ -108,7 +108,7 @@ The final thing is to edit the `grader` file in sudoers.d, all that needs to be 
 
     $ sudo nano /etc/sudoers.d/grader
 
-#### 4. Public/Private Key
+### 4. Public/Private Key
 
 You should be still logged in as `ubuntu` within the instance. Now that we have created another user `grader`, let's switch user to `grader`.
 
@@ -153,19 +153,21 @@ Finally, reboot the instance by clicking on `Reboot` and from a terminal window,
 
     $ ssh grader@35.178.22.227 -i ~/.ssh/item_catalog -p 2200
 
-#### Disable Password Authentication
+### 5. Disable Password Authentication
 
-Open the SSH daemon configuration file.
+After re-entering your instance via SSH from a terminal window, we now need to disable password authentication so that users have to authenticate using key-based authentication. To do this ppen the SSH daemon configuration file.
 
     $ sudo nano /etc/ssh/sshd_config
 
-Scroll down to the line starting with `PasswordAuthentication`. Ensure that after this word, it says `no`. Then save and close the file.
-
-Reload the ssh daemon
+Scroll down to the line starting with `PasswordAuthentication`. Ensure that after this word, it says `no`. Then save and close the file using `CTRL+X`, `Y`, `Enter`. Reload the ssh daemon to refresh these changes.
 
     $ sudo systemctl reload sshd
 
-#### Change Timezone
+***
+
+## Deploy Application
+
+### 1. Change Timezone
 
 Configure the local timezone to UTC.
 
@@ -173,7 +175,7 @@ Configure the local timezone to UTC.
 
 Scroll down to `None of the above` and hit enter. Then scroll down again and hit enter when you find `UTC`.
 
-#### Install Apache2 Webserver and mod_wsgi
+### 2. Install Apache2 Webserver and mod_wsgi
 
     $ sudo apt-get install apache2
     $ sudo apt-get install libapache2-mod-wsgi
@@ -196,7 +198,7 @@ Create the `myapp.wsgi` file
 
     $ sudo nano /var/www/html/myapp.wsgi
 
-#### Install Git
+### 3. Install Git
 
 Install Git
 
@@ -210,7 +212,7 @@ Configure your email
 
     $ git config --global user.email <email>
 
-#### Clone the Item Catalog app from Github
+### 4. Clone the Item Catalog app from Github
 
 cd into `/var/www`
 
@@ -250,7 +252,7 @@ Include the following code within this file
 
 Save and exit from this file.
 
-#### Install virtual environment, Flask and project dependencies
+### 5. Install virtual environment, Flask and project dependencies
 
 Install pip, the tool for installing Python packages and update
 
@@ -283,7 +285,7 @@ Install psycopg2
     $ sudo pip install psycopg2-binary
     $ deactivate
 
-#### Configure and enable a new virtual host
+### 6. Configure and enable a new virtual host
 
 Create a virtual host config file
 
@@ -320,7 +322,7 @@ To activate the new configuration reload the apache server
 
     $ sudo service apache2 reload
 
-#### Install and configure PostgreSQL
+### 7. Install and configure PostgreSQL
 
 Install some necessary Python packages for working with PostgreSQL
 
@@ -377,11 +379,11 @@ To prevent potential attacks from the outer world we double check that no remote
     host    all             all             127.0.0.1/32            md5
     host    all             all             ::1/128                 md5
 
-#### Update OAuth Authorised Javascript Origins and Domains
+### 7. Update OAuth Authorised Javascript Origins and Domains
 
 To let users correctly log in with Google Sign-In you must add http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com to the list of authorized URI's for this Client ID.
 
-#### Restart Apache
+### 8. Restart Apache
 
 Restart Apache to launch the app
 
