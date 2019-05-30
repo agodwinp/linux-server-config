@@ -1,12 +1,17 @@
 # Linux Server Configuration
 
-This repository will guide you through how to take a baseline installation of an Ubuntu Linux Virtual Machine using Amazon Lightsail and prepare it to host web applications. It will include installing updates, securing it from attacks and installing/configuring web and database servers. Finally, it will show you how to deploy my previously built item catalog application.
+This repository will guide you through how to take a baseline installation of an Ubuntu Linux Virtual Machine using Amazon Lightsail and prepare it to host web applications. It will include:
+
+- Installing updates,
+- Securing it from attacks,
+- Installing/configuring web and database servers,
+- How to deploy my previously built **Item Catalog** application.
 
 ***
 
 ## Design
 
-The architecture for this web application consists of a Python Flask application being served via mod_wsgi on an Apache web server. This Apache web server is being hosted on an AWS Lightsail Ubuntu Linux 16.04 LTS machine, and is accessing data from a PostgreSQL database on the same instance. The front end has been built using HTML, CSS, JavaScript, jQuery and AJAX.
+The architecture for this web application consists of a **Python Flask** application being served via **mod_wsgi** on an **Apache** web server. This Apache web server is being hosted on an **AWS Lightsail Ubuntu Linux 16.04 LTS** machine, and is accessing data from a **PostgreSQL** database on the same instance. The front end has been built using **HTML**, **CSS**, **JavaScript**, **jQuery** and **AJAX**.
 
 <br>
 <br>
