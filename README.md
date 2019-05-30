@@ -16,7 +16,7 @@ Include architecture and code design diagrams.
 
 For this project I used a baseline installation of an Ubuntu Linux Virtual Machine provided by [Amazon Lightsail](https://lightsail.aws.amazon.com/ls/webapp/home/instances).
 
-- First, log in to Lighsail.
+- First, log in to Lightsail.
 - Once you're logged in, you'll be prompted to create an instance. Choose a plain Ubuntu Linux image and select the option for "OS Only".
 
 > **Note**: I used a Ubuntu Linux 16.04 LTS instance for my setup.
@@ -40,7 +40,7 @@ For this project I used a baseline installation of an Ubuntu Linux Virtual Machi
 
 ### 2. Secure Server
 
-##### Update package source list and currently installed packages
+#### Update package source list and currently installed packages
 
 An easy step to ensure your server is secure is to keep your software up to date with nerw releases. The first step to update your installed software is to update your package source list. This makes sure your system is aware of the latest information stored within the repositories you're making use of.
 
@@ -53,8 +53,6 @@ Now that our system is aware of all the software available and their most recent
 Finally, let's remove any unneeded packages.
 
     $ sudo apt-get autoremove
-
-### Configurations
 
 #### SSH Configuration
 
