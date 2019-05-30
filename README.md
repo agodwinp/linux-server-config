@@ -175,73 +175,58 @@ Configure the local timezone to UTC.
 
 Scroll down to `None of the above` and hit enter. Then scroll down again and hit enter when you find `UTC`.
 
-### 2. Install Apache2 Webserver and mod_wsgi
+### 2. Install Apache2 webserver and mod_wsgi
+
+Apache is by far the most popular web server available, with 47% market share. We will now install an Apache2 webserver to serve a Python mod_wsgi application. Ensure that you are logged in as the `grader` user and run the following commands.
 
     $ sudo apt-get install apache2
     $ sudo apt-get install libapache2-mod-wsgi
 
-Check to see if the Apache web server is running by visiting `35.178.22.227:80`. You should be presented with an Apache documentation site. Now we will change this so that it routes to our application.
-
-Configure Apache to handle requests using the WSGI module.
-
-    $ sudo nano /etc/apache2/sites-enabled/000-default.conf
-
-Add the following line above `</Virtualhost>`
-    
-    $ WSGIScriptAlias / /var/www/html/myapp.wsgi
-
-Restart apache with
-
-    $ sudo apache2ctl restart
-
-Create the `myapp.wsgi` file
-
-    $ sudo nano /var/www/html/myapp.wsgi
+> Check to see if the Apache web server is running by visiting `35.178.22.227:80`. You should be presented with an Apache documentation site. If so, this means that Apache has been properly installed.
 
 ### 3. Install Git
 
-Install Git
+Ensure that you are still logged in as the `grader` user and run this command.
 
     $ sudo apt-get install git
 
-Configure your username
+Next we can configure our username and email for the Git account that we will be using.
 
     $ git config --global user.name <username>
-
-Configure your email
-
     $ git config --global user.email <email>
 
-### 4. Clone the Item Catalog app from Github
+### 4. Clone Application from Github
 
-cd into `/var/www`
+Since I cloned my own item catalog project into the instance, I will be referring to this [repository](https://github.com/agodwinp/item-catalog). By default, Apache2 starts up a web server and serves the files located in `/var/www/html/`. In the following steps we will clone my web application and configure Apache to hand-off certain requests to an application handler called `mod_wsgi`. First, we need to navigate to `/var/www`.
 
     $ cd /var/www
 
-Make a new directory for the git repo
+Then make a new directory for the git repository.
 
     $ sudo mkdir catalog
 
-Change ownership of this directory to grader
+Change ownership of this directory to be owned by `grader`.
 
     $ sudo chown grader catalog
 
-Move inside the newly created folder and clone the repo from Github into a folder called `catalog`
+Move inside the newly created folder and clone the repository from Github into a folder called `catalog`.
 
     $ cd catalog
-    $ git clone https://github.com/agodwinp/udacity-item-catalog.git catalog
+    $ git clone https://github.com/agodwinp/item-catalog.git catalog
 
-cd into the git repo and checkout the deployment branch
+`cd` into the repository and checkout the deployment branch.
 
     $ cd catalog
     $ git checkout deployment
 
-Make a catalog.wsgi file to serve the application over mod_wsgi, and then edit this file with nano
+> **Note**: We are checking out of the master branch and into a new branch called `deployment`. I created this seperate branch which differes slightly from the master branch to ensure that the application deploys properly with the new tools being used.
+
+Make a `catalog.wsgi` file to serve the application over `mod_wsgi`, and then edit this file with nano.
 
     $ touch catalog.wsgi
     $ nano catalog.wsgi
 
-Include the following code within this file
+Include the following code within this file.
 
     import sys
     import logging
@@ -250,7 +235,9 @@ Include the following code within this file
 
     from catalog import app as application
 
-Save and exit from this file.
+Save and exit from this file with `CTRL+X`, `Y` and `Enter`.
+
+> **Note**: the .git folder will be inaccessible from the web without any particular setting. The only directory that can be listed in the browser will be the `static` folder.
 
 ### 5. Install virtual environment, Flask and project dependencies
 
