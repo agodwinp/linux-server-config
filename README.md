@@ -1,6 +1,6 @@
-# 3. Linux Server Configuration
+# Linux Server Configuration
 
-This repository will guide you through how to set up a Ubuntu Linux VM using Amazon Lightsail, and access a deployed item-catalog application from the server.
+This repository will guide you through how to take a baseline installation of a Ubuntu Linux Virtual Machine using Amazon Lightsail and prepare it to host web applications. It will include installing updates, securing it from attacks and installing/configuring web and database servers. Finally, it will show you how to deploy and serve my previously built item catalog application.
 
 ***
 
@@ -366,6 +366,7 @@ To let users correctly log in with Google Sign-In you must add http://ec2-35-178
 #### Restart Apache
 
 Restart Apache to launch the app
+
 
     $ sudo service apache2 restart
 
