@@ -155,7 +155,7 @@ Configure the local timezone to UTC.
 
 Scroll down to `None of the above` and hit enter. Then scroll down again and hit enter when you find `UTC`.
 
-#### Install Apache2 Webserver
+#### Install Apache2 Webserver and mod_wsgi
 
     $ sudo apt-get install apache2
     $ sudo apt-get install libapache2-mod-wsgi
@@ -178,7 +178,33 @@ Create the `myapp.wsgi` file
 
     $ sudo nano /var/www/html/myapp.wsgi
 
-#### Install and configure PostgreSQL
+#### Install Git
+
+Install Git
+
+    $ sudo apt-get install git
+
+Configure your username
+
+    $ git config --global user.name <username>
+
+Configure your email
+
+    $ git config --global user.email <email>
+
+#### Clone to Item Catalog app from Github
+
+cd into `/var/www`
+
+    $ cd /var/www
+
+Make a new directory for the git repo
+
+    $ sudo mkdir catalog
+
+Change ownership of this directory to grader
+
+    $ sudo chown grader catalog
 
 
 
