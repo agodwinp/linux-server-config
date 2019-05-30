@@ -11,7 +11,7 @@ The architecture for this web application consists of a Python Flask application
 <br>
 <br>
 <p align="center">
-    <img src="architecture.png" width="800", title="Architecture">
+    <img src="architecture.png" width="900", title="Architecture">
 </p>
 <br>
 <br>
