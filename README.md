@@ -234,7 +234,35 @@ Save and exit from this file.
 
 #### Install virtual environment, Flask and project dependencies
 
+Install pip, the tool for installing Python packages and update
 
+    $ sudo apt-get install python-pip
+    $ sudo pip install --upgrade pip
+
+If virtualenv is not installed, use pip to install it using the following command
+
+    $ sudo pip install virtualenv
+
+Move to the parent catalog folder and then create a new virtual environment
+
+    $ cd /var/www/catalog
+    $ sudo virtualenv venv
+
+Activate the virtual environment
+
+    $ source venv/bin/activate
+
+Change permissions to the virtual environment folder
+
+    $ sudo chmod -R 777 venv
+
+Install all the projects dependencies
+
+    $ sudo pip install -r catalog/requirements.txt
+
+Install psycopg2
+
+    $ sudo pip install psycopg2-binary
 
 
 
