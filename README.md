@@ -302,8 +302,62 @@ To activate the new configuration reload the apache server
 
     $ sudo service apache2 reload
 
+#### Install and configure PostgreSQL
 
+Install some necessary Python packages for working with PostgreSQL
 
+    $ sudo apt-get install libpq-dev python-dev
+
+Install PostgreSQL
+
+    $ sudo apt-get install postgresql postgresql-contrib
+
+Postgres is automatically creating a new user during its installation, whose name is 'postgres'. That is a trusted user who can access the database software. So let's change the user then connect to the database system
+
+    $ sudo su - postgres
+    $ psql
+
+Create a new user called 'catalog' with a password
+
+    # CREATE USER catalog WITH PASSWORD 'password';
+
+Give catalog user the CREATEDB capability
+
+    # ALTER USER catalog CREATEDB;
+
+Create the 'catalog' database owned by catalog user
+
+    # CREATE DATABASE catalog WITH OWNER catalog;
+
+Connect to the database:
+
+    # \c catalog
+
+Revoke all rights
+        
+    # REVOKE ALL ON SCHEMA public FROM public;
+
+Lock down the permissions to only let catalog role create tables
+
+    # GRANT ALL ON SCHEMA public TO catalog;
+
+Log out from PostgreSQL and then return to the grader user on the server
+
+    # \q
+    $ exit
+
+Setup the database with
+
+    $ python /var/www/catalog/catalog/populatedb.py
+
+To prevent potential attacks from the outer world we double check that no remote connections to the database are allowed. Open the file `ph_hba_conf` and edit it to look like below
+
+    $ sudo nano /etc/postgresql/9.3/main/pg_hba.conf
+
+    local   all             postgres                                peer
+    local   all             all                                     peer
+    host    all             all             127.0.0.1/32            md5
+    host    all             all             ::1/128                 md5
 
 ***
 
