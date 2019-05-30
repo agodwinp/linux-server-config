@@ -192,7 +192,7 @@ Configure your email
 
     $ git config --global user.email <email>
 
-#### Clone to Item Catalog app from Github
+#### Clone the Item Catalog app from Github
 
 cd into `/var/www`
 
@@ -205,6 +205,36 @@ Make a new directory for the git repo
 Change ownership of this directory to grader
 
     $ sudo chown grader catalog
+
+Move inside the newly created folder and clone the repo from Github into a folder called `catalog`
+
+    $ cd catalog
+    $ git clone https://github.com/agodwinp/udacity-item-catalog.git catalog
+
+cd into the git repo and checkout the deployment branch
+
+    $ cd catalog
+    $ git checkout deployment
+
+Make a catalog.wsgi file to serve the application over mod_wsgi, and then edit this file with nano
+
+    $ touch catalog.wsgi
+    $ nano catalog.wsgi
+
+Include the following code within this file
+
+    import sys
+    import logging
+    logging.basicConfig(stream=sys.stderr)
+    sys.path.insert(0, "/var/www/catalog/")
+
+    from catalog import app as application
+
+Save and exit from this file.
+
+#### Install virtual environment, Flask and project dependencies
+
+
 
 
 
