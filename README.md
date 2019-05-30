@@ -62,12 +62,6 @@ The default SSH port is `22`. We want to change this port to `2200`. To do this,
 
 Once you see the contents of this file with the `nano` application, change line 5 that says `Port 20` to `Port 2200`. Then save and exit this file by typing `CTRL+X`, `Y`, `Enter`, one after another.
 
-> Return to the your Lightsail instance screen within your browser. Navigate to the `Networking` tab and you should see under `Firewall`, that the instance accepts connections on port `22` and `80` for SSH and HTTP respectively. Add another connection here with the following settings and save the changes.
-
-    Application: Custom
-    Protocol: TCP
-    Port range: 2200
-
 #### Firewall configuration
 
 Using the **Uncomplicated Firewall** (UFW) application, we will configure the firewall for this server to only allow incoming connections for **SSH** (port 2200), **HTTP** (port 80) and **NTP** (port 123). First, block all incoming requests.
@@ -92,47 +86,31 @@ Allow NTP port 123.
 
 Finally, start the firewall.
 
-> **Warning**: When changing the SSH port, make sure that the firewall is open for port 2200 first, otherwise you will be locked out of the server. When you change the SSH port, the instance will no longer be accessible through the web app `Connect using SSH` button. Instructions on how to connection through a temrinal window are provided below.
+> **Warning**: When changing the SSH port, make sure that the firewall is open for port 2200 first, otherwise you will be locked out of the server. When you change the SSH port, the instance will no longer be accessible through the web app `Connect using SSH` button. Instructions on how to connect through a temrinal window are provided later.
 
     $ sudo ufw enable
 
-Once again return to the your Lightsail instance, navigate to the `Networking` tab and as before you should see that the instance accepts connections on port `22`, `80` and `2200`. We need to remove the connection for `22` and add a connection for **NTP** on port `123`. Click on `Edit rules`, delete the connection on port `22` and add a connection with the following settings.
+### 3. Create 'grader' user and grant access
 
-    Application: Custom
-    Protocol: TCP
-    Port range: 123
-
-Finally, reboot the instance by clicking on `Reboot`.
-
-#### Users
-
-Create a new user called `grader`
+Whilst still logged in via SSH within your browser, we need to create a new user called `grader`.
 
     $ sudo adduser grader
 
-Enter a password, but we will disable this later. You can hit enter when prompted to fill in more information, or feel free to fill in the details (Full name, Room number, Work phone, Home phone, Other).
-
-Make `grader` a sudoer. Copy existing sudoers.d file as grader.
+Enter a password, but we will disable this later. You can hit enter when prompted to fill in more information, or feel free to fill in the details (Full name, Room number, Work phone, Home phone, Other). Next we need to make `grader` a sudoer. To do this, we can copy the existing `sudoers.d` file as `grader`.
 
     $ sudo cp /etc/sudoers.d/90-cloud-init-users /etc/sudoers.d/grader
 
-Give read and write permissions to root for this user.
+Now give read and write permissions to root for this user.
 
     $ sudo chmod 600 /etc/sudoers.d/grader
 
-Edit the `grader` file in sudoers.d
+The final thing is to edit the `grader` file in sudoers.d, all that needs to be changed is `ubuntu ALL=(ALL) NOPASSWD:ALL` to `grader ALL=(ALL) NOPASSWD:ALL`.
 
     $ sudo nano /etc/sudoers.d/grader
 
-Change `ubuntu ALL=(ALL) NOPASSWD:ALL` to `grader ALL=(ALL) NOPASSWD:ALL`
+#### 4. Public/Private Key
 
-#### Public/Private Key
-
-Log in again as ubuntu
-
-    $ ssh ubuntu@35.178.22.227 -p 2200
-
-Switch user to `grader`.
+You should be still logged in as `ubuntu` within the instance. Now that we have created another user `grader`, let's switch user to `grader`.
 
     $ su - grader
 
@@ -140,28 +118,38 @@ In the root directory, create a directory called `.ssh`.
 
     $ sudo mkdir /.ssh
 
-Create a file called `authorized_keys`.
+Within the `.ssh` folder, create a file called `authorized_keys`.
 
     $ sudo touch /.ssh/authorized_keys
 
-Return to the public key that has been generated on your local machine, and view the key using:
+Keep this window open where you're logged into the instance via SSH in the browser, but return to the public key that we generated earlier on your local machine. We can do this by opening a terminal window and running
 
     $ cat ~/.ssh/item_catalog.pub
 
-Copy this entire key into the `authorized_key` file within the VM using:
+View the contents and copy this entire key into the `authorized_key` file within the VM using:
 
     $ sudo nano /.ssh/authorized_keys
 
-Set up some specific file permissions on the authorized_keys file and the .ssh directory. This is a security measure that ssh enforces to ensure other users cannot gain access to your account. 
+Next, we need to set up some specific file permissions on the `authorized_keys` file and the `.ssh` directory. This is a security measure that ssh enforces to ensure other users cannot gain access to your account. From within your instance, run the following commands
 
     $ sudo chmod 700 /.ssh
     $ sudo chmod 644 /.ssh/authorized_keys
 
-Log out of the grader user
+Now let's log out of the grader user.
 
     $ exit
 
-And log out of the VM. Now reboot the VM and from a terminal window, ssh into the VM with your new user and private key using this command:
+And log out of the instance. Return to the your Lightsail instance screen within your browser. Navigate to the `Networking` tab and you should see under `Firewall`, that the instance accepts connections on port `22` and `80` for SSH and HTTP respectively. We need to add 2 more connections and remove the **SSH** connection on port 22. Click on `Edit rules`, delete the connection on port `22` and add two connections with the following settings. Finally save these changes.
+
+    Application: Custom
+    Protocol: TCP
+    Port range: 2200
+
+    Application: Custom
+    Protocol: TCP
+    Port range: 123
+
+Finally, reboot the instance by clicking on `Reboot` and from a terminal window, ssh into the instance with your new user and private key using this command:
 
     $ ssh grader@35.178.22.227 -i ~/.ssh/item_catalog -p 2200
 
