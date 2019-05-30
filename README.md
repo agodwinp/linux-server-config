@@ -376,14 +376,17 @@ To prevent potential attacks we need to ensure that no remote connections are al
 
 To let users correctly log in with Google Sign-In you must add http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com to the list of authorized URI's for this Client ID.
 
+You can do this from the [Google Developers Console](https://console.developers.google.com/apis/dashboard?project=excellerate).
+
 ### 8. Restart Apache
 
-Restart Apache to launch the app
+Now that we have cloned our application, configured Apache to serve the application using mod_wsgi, set up the database for our application to create, read, update and delete data from and secured our server from attacks... we are ready to go! 
 
+All that is left to do, is restart Apache and our application will be automatically served.
 
     $ sudo service apache2 restart
 
-If at any point the web server does not serve the item catalog application any longer, you can view the apache2 error log by running the following command on thr server
+> If at any point the web server does not serve the item catalog application any longer, you can view the apache2 error log by running the following command on thr server
 
     $ sudo cat /var/log/apache2/error.log
 
@@ -394,6 +397,8 @@ If at any point the web server does not serve the item catalog application any l
 - IP Address: 35.178.22.227
 - Accessible SSH Port: 2200
 - Application URL: http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com
+
+To access my **Item Catalog** application, visit the application URL above!
 
 ***
 
