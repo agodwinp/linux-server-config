@@ -423,7 +423,9 @@ To complete this project, I leveraged some great resources listed below... I hig
 
 - [DigitalOcean](https://www.digitalocean.com/community/tutorials/) - This site provides a lot of high quality, detailed tutorials for DevOps and Development guides.
 - [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) - This is a comprehensive and simple guide to making your README files look great.
-- [**iliketomatoes** linux server configuration](https://github.com/iliketomatoes/linux_server_configuration) - A great resource for configuring a Linux machine for deployment of applications. 
+- [**iliketomatoes** linux server configuration](https://github.com/iliketomatoes/linux_server_configuration) - A great resource for configuring a Linux machine for deployment of applications.
+
+***
 
 ## Authors
 
