@@ -63,9 +63,14 @@ Now that our system is aware of all the software available and their most recent
 
     $ sudo apt-get upgrade
 
-Finally, let's remove any unneeded packages.
+Let's remove any unneeded packages.
 
     $ sudo apt-get autoremove
+
+Finally, to mitigate the chances of packages quickly going out of date, let's install `unattended-upgrades` which will automatically manage package updates, and enable this package.
+
+    $ sudo apt-get install unattended-upgrades
+    $ sudo dpkg-reconfigure --priority=low unattended-upgrades
 
 #### SSH configuration
 
