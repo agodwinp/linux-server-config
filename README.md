@@ -409,13 +409,21 @@ All that is left to do, is restart Apache and our application will be automatica
 
 ## Usage
 
-- IP Address: 35.178.22.227
-- Accessible SSH Port: 2200
-- Application URL: http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com
+- IP Address: **35.178.22.227**
+- Accessible SSH Port: **2200**
+- Application URL: **http://ec2-35-178-22-227.eu-west-2.compute.amazonaws.com**
 
 To access my **Item Catalog** application, visit the application URL above!
 
 ***
+
+## References
+
+To complete this project, I leveraged some great resources listed below... I highly recommend you check them out too!
+
+- [DigitalOcean](https://www.digitalocean.com/community/tutorials/) - This site provides a lot of high quality, detailed tutorials for DevOps and Development guides.
+- [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) - This is a comprehensive and simple guide to making your README files look great.
+- [**iliketomatoes** linux server configuration](https://github.com/iliketomatoes/linux_server_configuration) - A great resource for configuring a Linux machine for deployment of applications. 
 
 ## Authors
 
